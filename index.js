@@ -17,19 +17,25 @@ const fuelBurnRate = 0.5; // Fuel burn rate in kg/s
 const newDistance = initialDistance + initialVelocity * (duration / 3600); // Converted duration from seconds to hours for consistency in units
 
 // Calculates remaining fuel
-const remainingFuel = fuelBurnRate * (duration / 3600); // Converted duration from seconds to hours for consistency in units
-
-// Calculates new velocity based on acceleration
-const newVelocity = calculateNewVelocity(
-  initialVelocity,
-  acceleration,
-  duration
-);
+const remainingFuel = initialFuel - fuelBurnRate * duration; // Converted duration from seconds to hours for consistency in units
 
 // Function to calculate new velocity
 function calculateNewVelocity(initialVelocity, acceleration, duration) {
-  return initialVelocity + acceleration * (duration / 3600); // Converted duration from seconds to hours for consistency in units
+  // Convert duration from seconds to hours for consistency in units
+  const durationInHours = duration / 3600;
+  // Calculate new velocity in m/s
+  const newVelocity = initialVelocity + acceleration * durationInHours;
+  // Convert new velocity from m/s to km/h for display
+  const newVelocityKmPerHr = newVelocity * (3600 / 1000);
+  return newVelocityKmPerHr; // Return the new velocity in km/h
 }
+
+// Calculates new velocity based on acceleration
+const newVelocity = calculateNewVelocity(
+  initialVelSecs, // Use initial velocity in m/s
+  acceleration,
+  duration
+);
 
 // Display corrected results
 console.log(`Corrected New Velocity: ${newVelocity} km/h`); // Displaying velocity with appropriate precision
